@@ -1,5 +1,5 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule,
   MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
@@ -7,13 +7,14 @@ import {
   MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule
 } from '@angular/material';
 
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
 import {NgModule} from '@angular/core';
-import {AppComponent} from './app.component';
-import {MenuComponent} from './menu/menu.component';
-import {DishdetailComponent} from './dishdetail/dishdetail.component';
-import {DishService} from './services/dish.service';
+import { AppComponent } from './app.component';
+import { MenuComponent } from './menu/menu.component';
+import { DishdetailComponent } from './dishdetail/dishdetail.component';
+import { DishService } from './services/dish.service';
+import { PromotionService } from './services/promotion.service';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
@@ -41,7 +42,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule,
     FlexLayoutModule, AppRoutingModule
   ],
-  providers: [DishService],
+  providers: [DishService , PromotionService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
