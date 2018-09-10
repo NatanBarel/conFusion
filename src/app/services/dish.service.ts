@@ -27,6 +27,10 @@ export class DishService {
     return of(DISHES.filter((dish) => (dish.id === id))[0]).pipe(delay(2000));
   }
 
+  getDishIds(): Observable<number[] | any> {
+    return of(DISHES.map(dish => dish.id ));
+  }
+
   getFeaturedDish(): Observable<Dish> {
     // return new Promise(resolve => {
     //   // Simulate server latency with 2 second delay
