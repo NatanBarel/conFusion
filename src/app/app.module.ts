@@ -24,6 +24,9 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { baseURL } from './shared/baseurl';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 
 @NgModule({
@@ -45,12 +48,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule, MatRadioModule, MatSelectModule,
     MatSlideToggleModule, MatToolbarModule, MatListModule, MatGridListModule,
     MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule,
-    FlexLayoutModule, AppRoutingModule, FormsModule, ReactiveFormsModule
+    FlexLayoutModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule
   ],
   entryComponents: [
     LoginComponent
   ],
-  providers: [DishService , PromotionService , LeaderService],
+  providers: [DishService , PromotionService , LeaderService, ProcessHTTPMsgService, {provide: 'BaseURL', useValue: baseURL}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
