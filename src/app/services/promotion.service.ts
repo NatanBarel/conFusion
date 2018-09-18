@@ -1,40 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Promotion } from '../shared/promotion';
-import { Promotions } from '../shared/promotions';
 import {Observable, of} from 'rxjs';
-import {delay} from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { ProcessHTTPMsgService } from './process-httpmsg.service';
+import { Restangular } from 'ngx-restangular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PromotionService {
 
-  constructor() { }
+  constructor(private http: HttpClient,
+              private processHTTPMsgService: ProcessHTTPMsgService, private restangular: Restangular) { }
+
+  // getPromotions(): Observable<Promotion[]> {
+  //   return of(Promotions).pipe(delay(5000));
+  // }
 
   getPromotions(): Observable<Promotion[]> {
-  //  return Promise.resolve(Promotions);
-  //   return new Promise<Promotion[]>(resolve => {
-  //     setTimeout(() => resolve(Promotions), 5000);
-  //   });
-    return of(Promotions).pipe(delay(5000));
+    return this.restangular.all('promotions').getList();
   }
-
   getPromotion(id: number): Observable<Promotion> {
-   // return Promotions.filter((promo) => (promo.id === id))[0];
-   // return Promise.resolve(Promotions.filter((p) => p.id === id)[0]);
-   //  return new Promise<Promotion>(resolve => {
-   //    setTimeout(() => resolve(Promotions.filter((p) => (p.id === id))[0]) , 5000);
-   //  });
-    return of(Promotions.filter((obj) => (obj.id === id))[0]).pipe(delay(5000));
+    return this.restangular.one('promotions', id).get();
   }
-
   getFeaturedPromotion(): Observable<Promotion> {
-   // return Promotions.filter((promotion) => promotion.featured)[0];
-   // return Promise.resolve(Promotions.filter( (p) => p.featured)[0]);
-   //  return new Promise<Promotion>(resolve => {
-   //    setTimeout( () => resolve(Promotions.filter((p) => (p.featured === true))[0]),
-   //      5000);
-   //  });
-    return of(Promotions.filter((obj) => (obj.featured === true))[0]).pipe(delay(5000));
+    return this.restangular.all('promotions').getList({featured: true});
   }
 }

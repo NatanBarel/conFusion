@@ -1,38 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Leader } from '../shared/leader';
-import { Leaders } from '../shared/leaders';
 import {Observable, of} from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { ProcessHTTPMsgService } from './process-httpmsg.service';
+import { Restangular } from 'ngx-restangular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeaderService {
 
-  constructor() { }
+  constructor(private http: HttpClient,
+              private processHTTPMsgService: ProcessHTTPMsgService, private restangular: Restangular) { }
 
   getLeaders(): Observable<Leader[]> {
-    // return Promise.resolve(Leaders);
-    // return new Promise<Leader[]>(resolve => {
-    //   setTimeout(() => resolve(Leaders), 5000);
-    // });
-    return of(Leaders).pipe(delay(2000 ));
+    return this.restangular.all('leaders').getList();
   }
   getLeader(id: number): Observable<Leader> {
-   // return Promise.resolve(Leaders.filter( (l) => (l.id === id))[0]);
-   // return Leaders.filter( (l) => (l.id === id))[0];
-   //  return new Promise<Leader>(resolve => {
-   //    setTimeout(() => resolve(Leaders.filter((l) => (l.id === id))[0]),
-   //      5000);
-   //  });
-    return of(Leaders.filter((obj) => (obj.id === id))[0]).pipe(delay(2000));
+    return this.restangular.one('leaders', id).get();
   }
   getFeaturedLeader(): Observable<Leader> {
-   // return Promise.resolve(Leaders.filter( (l) => (l.featured))[0]);
-   //  return new Promise<Leader>(resolve => {
-   //    setTimeout(() => resolve(Leaders.filter((l) => (l.featured))[0]),
-   //      5000);
-   //  });
-    return of(Leaders.filter((obj) => (obj.featured === true))[0]).pipe(delay(2000));
+    return this.restangular.all('leaders').getList({featured: true});
   }
 }
