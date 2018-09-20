@@ -17,6 +17,7 @@ export class DishdetailComponent implements OnInit {
   @ViewChild('cform') commentsFormDirective;
 
   dish: Dish;
+  dishcopy = null;
   errMess: string;
   dishIds: number[];
   prev: number;
@@ -46,9 +47,13 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+    // this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(+params['id'])))
+    //   .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+    //       errormsg => this.errMess = <any>errormsg);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(+params['id'])))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
-          errormsg => this.errMess = <any>errormsg);
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+        errmess => { this.dish = null; this.errMess = <any>errmess; });
+
   }
   setPrevNext(dishId: number) {
     const index = this.dishIds.indexOf(dishId);
@@ -72,6 +77,8 @@ export class DishdetailComponent implements OnInit {
     this.newComment.date = new Date().toISOString();
     this.dishservice.getDish(this.dish.id).subscribe( dish => {
       dish.comments.push(this.newComment);
+      this.dishcopy = dish;
+      this.dishcopy.save().subscribe(obj => {this.dish = obj; console.log(this.dish); });
       this.commentForm.reset({
         author: '',
         comment: '',
