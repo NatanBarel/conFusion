@@ -10,6 +10,10 @@ export function visibility() {
       transform: 'scale(0.5)',
       opacity: 0
     })),
+    state('none', style({
+      display: 'none',
+      opacity: 0
+    })),
     transition('* => *', animate('0.5s ease-in-out'))
   ]);
 }
@@ -31,7 +35,7 @@ export function expand() {
   return trigger('expand', [
     state('*', style({ opacity: 1, transform: 'translateX(0)' })),
     transition(':enter', [
-      style({ transform: 'translateY(-50%)', opacity:0 }),
+      style({ transform: 'translateY(-50%)', opacity: 0 }),
       animate('200ms ease-in', style({ opacity: 1, transform: 'translateX(0)' }))
     ])
   ]);

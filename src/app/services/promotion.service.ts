@@ -14,10 +14,6 @@ export class PromotionService {
   constructor(private http: HttpClient,
               private processHTTPMsgService: ProcessHTTPMsgService, private restangular: Restangular) { }
 
-  // getPromotions(): Observable<Promotion[]> {
-  //   return of(Promotions).pipe(delay(5000));
-  // }
-
   getPromotions(): Observable<Promotion[]> {
     return this.restangular.all('promotions').getList();
   }

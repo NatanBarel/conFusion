@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut, expand } from '../animations/app.animation';
+import { flyInOut, expand , visibility} from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contact',
@@ -12,7 +14,7 @@ import { flyInOut, expand } from '../animations/app.animation';
     'style': 'display: block;'
   },
   animations: [
-    flyInOut(), expand()
+    flyInOut(), expand() , visibility()
   ]
 })
 export class ContactComponent implements OnInit {
@@ -21,6 +23,9 @@ export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  visibility = 'shown';
+  spinnervisability = true;
+  submissionvisability = true;
   contactType = ContactType;
   formErrors = {
     'firstname': '',
@@ -48,7 +53,16 @@ export class ContactComponent implements OnInit {
       'email':         'Email not in valid format.'
     },
   };
-  constructor(private fb: FormBuilder) {
+  feedbackfromserver: Feedback = {
+    firstname: '',
+    lastname: '',
+    telnum:  0,
+    email:  '',
+    agree:  true,
+    contacttype:  '',
+    message:  '',
+  };
+  constructor(private fb: FormBuilder , private fbservice: FeedbackService) {
     this.createForm();
   }
 
@@ -70,17 +84,30 @@ export class ContactComponent implements OnInit {
     this.onValueChanged(); // (re)set validation messages now
   }
   onSubmit() {
+    this.spinnervisability = false;
+    this.visibility = 'none';
     this.feedback = this.feedbackForm.value;
-    this.feedbackForm.reset({
-      firstname: '',
-      lastname: '',
-      telnum: '',
-      email: '',
-      agree: false,
-      contacttype: 'None',
-      message: ''
+    this.fbservice.submitFeedback(this.feedback).
+    subscribe( data => {
+      console.log(data);
+      this.feedbackfromserver = data;
+      this.spinnervisability = true;
+      this.submissionvisability = false;
+      this.feedbackForm.reset({
+        firstname: '',
+        lastname: '',
+        telnum: '',
+        email: '',
+        agree: false,
+        contacttype: 'None',
+        message: ''
+      });
+      this.feedbackFormDirective.resetForm();
+      setTimeout(() => {
+        this.submissionvisability = true;
+        this.visibility = 'shown';
+      }, 5000);
     });
-    this.feedbackFormDirective.resetForm();
   }
   onValueChanged(data?: any) {
     if (!this.feedbackForm) { return; }

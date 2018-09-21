@@ -42,5 +42,4 @@ export class HomeComponent implements OnInit {
       .subscribe(leaders => this.leader = leaders[0],
         errmess => this.leaderErrMsg = <any>errmess.message);
   }
-
 }

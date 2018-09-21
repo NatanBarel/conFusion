@@ -67,5 +67,9 @@
         </p>
       </mat-list-item>
     </mat-list>
+    <div *ngIf="errMsg">
+      <h2>Error</h2>
+      <h4>{{errMsg}}</h4>
+    </div>
   </div>
 </div>

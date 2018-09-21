@@ -30,6 +30,7 @@ import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 import { RestangularModule, Restangular } from 'ngx-restangular';
 import { RestangularConfigFactory } from './shared/restConfig';
 import { HighlightDirective } from './directives/highlight.directive';
+import { FeedbackService } from './services/feedback.service';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { HighlightDirective } from './directives/highlight.directive';
   entryComponents: [
     LoginComponent
   ],
-  providers: [DishService , PromotionService , LeaderService, ProcessHTTPMsgService, {provide: 'BaseURL', useValue: baseURL}],
+  providers: [DishService , FeedbackService
+    , PromotionService , LeaderService, ProcessHTTPMsgService, {provide: 'BaseURL', useValue: baseURL}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

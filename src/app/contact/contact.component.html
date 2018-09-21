@@ -35,10 +35,9 @@
       </div>
     </div>
   </div>
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div fxFlex fxFlexOffset="20px" class="form-size" [@visibility]="visibility">
     <h3>Send us your Feedback</h3>
     <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
-
     <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
       <p>
         <mat-form-field class="half-width">
@@ -79,5 +78,18 @@
       </p>
       <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
     </form>
+  </div>
+  <div [hidden]="spinnervisability">
+    <mat-spinner></mat-spinner><h4>Submitting Form . . . Please Wait</h4>
+  </div>
+  <div [hidden]="submissionvisability">
+    <h2>Your Submission</h2>
+    <h3>First Name: </h3> <h3>{{feedbackfromserver.firstname}}</h3>
+    <h3>Last Name: </h3> <h3>{{feedbackfromserver.lastname}}</h3>
+    <h3>Tel. Number: </h3> <h3>{{feedbackfromserver.telnum}}</h3>
+    <h3>Email: </h3> <h3>{{feedbackfromserver.email}}</h3>
+    <h3>Contact you?: </h3> <h3>{{feedbackfromserver.agree}}</h3>
+    <h3>How?: </h3> <h3>{{feedbackfromserver.contacttype}}</h3>
+    <h3>Feedback: </h3> <h3>{{feedbackfromserver.message}}</h3>
   </div>
 </div>

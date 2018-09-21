@@ -18,11 +18,11 @@ import { flyInOut, expand } from '../animations/app.animation';
 export class AboutComponent implements OnInit {
 
   leaders: Leader [];
-
+  errMsg: string;
   constructor(private leaderService: LeaderService) { }
 
   ngOnInit() {
-    this.leaderService.getLeaders().subscribe(obj => this.leaders = obj);
+    this.leaderService.getLeaders().subscribe(obj => this.leaders = obj, error => this.errMsg = error.message);
   }
 
 }
