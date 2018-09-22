@@ -23,6 +23,7 @@ export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  feedbackfromserver: Feedback;
   visibility = 'shown';
   spinnervisability = true;
   submissionvisability = true;
@@ -52,15 +53,6 @@ export class ContactComponent implements OnInit {
       'required':      'Email is required.',
       'email':         'Email not in valid format.'
     },
-  };
-  feedbackfromserver: Feedback = {
-    firstname: '',
-    lastname: '',
-    telnum:  0,
-    email:  '',
-    agree:  true,
-    contacttype:  '',
-    message:  '',
   };
   constructor(private fb: FormBuilder , private fbservice: FeedbackService) {
     this.createForm();

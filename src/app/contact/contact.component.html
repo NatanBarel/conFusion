@@ -82,7 +82,7 @@
   <div [hidden]="spinnervisability">
     <mat-spinner></mat-spinner><h4>Submitting Form . . . Please Wait</h4>
   </div>
-  <div [hidden]="submissionvisability">
+  <div [hidden]="submissionvisability" *ngIf="feedbackfromserver">
     <h2>Your Submission</h2>
     <h3>First Name: </h3> <h3>{{feedbackfromserver.firstname}}</h3>
     <h3>Last Name: </h3> <h3>{{feedbackfromserver.lastname}}</h3>
